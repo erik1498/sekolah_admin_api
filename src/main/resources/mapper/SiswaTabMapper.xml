@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.erickhene.administrator.dao.mapper.SiswaTabMapper">
 
-    <resultMap id="BaseResultMap" type="com.erickhene.entity.Base">
+    <resultMap id="BaseResultMap" type="com.erickhene.administrator.entity.Base">
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
         <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
         <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
     </resultMap>
 
     <resultMap id="SiswaResultMap" type="com.erickhene.administrator.entity.impl.Siswa" extends="BaseResultMap">
-        <id column="id" jdbcType="BIGINT" property="id"/>
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
         <result column="s_name" jdbcType="VARCHAR" property="name" />
         <result column="s_bithplace" jdbcType="VARCHAR" property="birthPlace" />
         <result column="s_bithdate" jdbcType="VARCHAR" property="birthDate" />
@@ -18,7 +18,7 @@
         <result column="s_nipd" jdbcType="VARCHAR" property="nipd" />
         <result column="s_nik" jdbcType="VARCHAR" property="nik" />
         <result column="s_phone" jdbcType="VARCHAR" property="phone" />
-        <result column="s_gender" jdbcType="VARCHAR" property="gender" />
+        <result column="s_gender" jdbcType="SMALLINT" property="gender" />
     </resultMap>
 
     <select
@@ -26,35 +26,7 @@
             resultMap="SiswaResultMap"
             parameterType="map"
     >
-<!--        SELECT results.* FROM (-->
-<!--            SELECT-->
-<!--                kt.*,-->
-<!--                tat.enabled AS tat_enabled,-->
-<!--                tat.ta_status AS tat_status,-->
-<!--                tat.ta_name AS tat_name,-->
-<!--                tkt.tk_name AS tkt_name-->
-<!--            FROM-->
-<!--                kelas_tab kt,-->
-<!--                tahun_akademik_tab tat,-->
-<!--                tingkatan_kelas_tab tkt-->
-<!--            WHERE-->
-<!--                kt.enabled = 1-->
-<!--            AND-->
-<!--                tat.uuid = kt.k_tahun_akademik_uuid-->
-<!--            AND-->
-<!--                tat.enabled = 1-->
-<!--            AND-->
-<!--                tat.ta_status = 1-->
-<!--        ) AS results-->
-<!--        WHERE-->
-<!--            results.k_name-->
-<!--        LIKE-->
-<!--            '%${search}%'-->
-<!--        ORDER BY-->
-<!--            results.k_name ASC-->
-<!--        LIMIT-->
-<!--            ${number}, ${size}-->
-        SELECT * FROM siswa_tab
+        SELECT * FROM siswa_tab WHERE enabled = 1 AND s_name LIKE '%${search}%' ORDER BY s_name ASC LIMIT ${number}, ${size}
     </select>
 
     <select
