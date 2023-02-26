@@ -22,8 +22,8 @@ public class GuruController {
         this.guruService = guruService;
     }
 
-    @GetMapping
-    public ResponseEntity<GlobalResponse<List<Guru>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
+    @PostMapping
+    public ResponseEntity<GlobalResponse<List<Guru>>> getAll(@RequestBody DataTableReq dataTableReq){
         GlobalResponse<List<Guru>> response = guruService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
     }
@@ -34,7 +34,7 @@ public class GuruController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody GuruReq guruReq, Errors errors){
         if (errors.hasErrors()){
             return ValidationUtil.generateError(errors);

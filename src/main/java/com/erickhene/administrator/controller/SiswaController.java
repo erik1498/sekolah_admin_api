@@ -22,7 +22,7 @@ public class SiswaController {
         this.siswaService = siswaService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<GlobalResponse<List<Siswa>>> getAll(@RequestBody(required = false) DataTableReq dataTableReq){
         GlobalResponse<List<Siswa>> response = siswaService.getAll(dataTableReq);
         return ResponseEntity.status(response.getCode()).body(response);
@@ -34,7 +34,7 @@ public class SiswaController {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<GlobalResponse<?>> create(@Valid @RequestBody SiswaReq siswaReq, Errors errors){
         if (errors.hasErrors()){
             return ValidationUtil.generateError(errors);
