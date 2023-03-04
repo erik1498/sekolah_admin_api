@@ -83,7 +83,7 @@ public class GuruService implements Base<Guru> {
                 getByUuid.setReligion(data.getReligion());
                 repository.save(getByUuid);
                 log.info("Updated to = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.OK.value(), getByUuid);
+                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), null);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class GuruService implements Base<Guru> {
                 getByUuid.setEnabled(false);
                 repository.save(getByUuid);
                 log.info("Guru Enabled = {}", getByUuid.toString());
-                return new GlobalResponse<>(null, HttpStatus.NO_CONTENT.value(), true);
+                return new GlobalResponse<>(null, HttpStatus.OK.value(), true);
             }
             return new GlobalResponse<>(AppConstant.DATA_NOT_FOUND, HttpStatus.NOT_FOUND.value());
         }catch (Exception e){
